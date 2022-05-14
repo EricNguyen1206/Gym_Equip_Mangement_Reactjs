@@ -1,0 +1,41 @@
+/* ========== Database ========== */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    padding: 8px;
+    border: 1px solid var(--pl-light-1);
+    width: 50px;
+    height: 70px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+td {
+    padding: 8px;
+    border: 1px solid #f66b349b;
+    width: 50px;
+    height: 70px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f66b3433;
+}
+
+tr:hover {
+    background-color: var(--pl-light-2);
+}
+
+th {
+    background-color: var(--pl-dark-2);
+    color: var(--pl-light-1);
+    text-align: center;
+}
+
+.status {
+    height: 1.5em;
+    width: 1.5em;
+}

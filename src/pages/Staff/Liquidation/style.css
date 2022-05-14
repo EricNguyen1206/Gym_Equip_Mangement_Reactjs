@@ -1,0 +1,135 @@
+.liquidation {
+    font-size: 1.2rem;
+}
+.liquidation__title,
+.liquidation__control,
+.liquidation__table {
+    margin: 4vh 4vw;
+}
+
+.liquidation__control {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.liquidation__control--icon {
+    display: inline;
+    margin: 0 5px;
+    transform: translateY(10%);
+}
+
+.modal {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    margin-left: 20%;
+}
+
+.btn-col {
+    display: flex;
+    padding: 2em 5%;
+    justify-content: space-between;
+}
+
+.container .table {
+    padding: 2em 5% 0;
+}
+
+.disable,
+.disable:hover {
+    color: #999;
+    background-color: #ccc;
+    border: none;
+    outline: none;
+    cursor:default;
+}
+
+.cancelbtn:hover {
+    color: var(--pl-light-1);
+    background-color: var(--pl-dark-2);
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border-radius: 0.5rem;
+    width: 92%; /* Could be more or less, depending on screen size */
+}
+
+/* ========== Table form ========== */
+.tb-form {
+    border-collapse: collapse;
+    width: 90%;
+    margin: 0 5%;
+    border: none;
+    justify-content: center;
+}
+
+.tb-form-data {
+    width: 15%;
+    height: 50px;
+    border: none;
+    text-align: left;
+}
+
+.tb-form-data:nth-child(even) {
+    width: 30%;
+}
+
+.tb-form-row:nth-child(even) {
+    background-color: transparent;
+}
+
+.tb-form-row:hover {
+    background-color: transparent;
+}
+
+/* Add Zoom Animation */
+.animate > h3 {
+    background-color: var(--pl-dark-3);
+    color: var(--pl-light-1);
+    padding: 10px;
+    text-align: center;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s;
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0);
+    }
+    to {
+        -webkit-transform: scale(1);
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+        display: block;
+        float: none;
+    }
+    .cancelbtn {
+        width: 100%;
+    }
+}

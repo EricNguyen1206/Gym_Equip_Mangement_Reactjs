@@ -1,0 +1,19 @@
+.equipment {
+    font-size: 1.2rem;
+}
+.equipment__title,
+.equipment__control,
+.equipment__table {
+    margin: 4vh 4vw;
+}
+
+.equipment__control {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.equipment__control--icon {
+    display: inline;
+    margin: 0 5px;
+    transform: translateY(10%);
+}

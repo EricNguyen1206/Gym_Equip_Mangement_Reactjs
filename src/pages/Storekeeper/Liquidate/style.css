@@ -1,0 +1,189 @@
+.liquidate {
+    font-size: 1.2rem;
+}
+.liquidate__title,
+.liquidate__control,
+.liquidate__table {
+    margin: 4vh 4vw;
+}
+
+.liquidate__control {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.liquidate__control--icon {
+    display: inline;
+    margin: 0 5px;
+    transform: translateY(10%);
+}
+
+
+/* ========== Database ========== */
+.liquidate__table table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.liquidate__table th {
+    padding: 8px;
+    border: 1px solid var(--pl-light-1);
+    width: 50px;
+    height: 70px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.liquidate__table td {
+    padding: 8px;
+    border: 1px solid #f66b349b;
+    width: 50px;
+    height: 70px;
+    text-align: center;
+}
+
+.liquidate__table td button {
+    margin: 0 .4rem;
+    padding: .4rem 0.8rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    border: .5px solid var(--pl-dark-3);
+    border-radius: 8px;
+    background-color: var(--pl-light-1);
+    cursor: pointer;
+}
+
+.liquidate__table td button:hover {
+    border: .5px solid var(--pl-light-2);
+    color: var(--pl-light-2);
+    background-color: var(--pl-dark-3);
+}
+
+.liquidate__table tr:nth-child(even) {
+    background-color: #f66b3433;
+}
+
+.liquidate__table tr:hover {
+    background-color: var(--pl-light-2);
+}
+
+.liquidate__table th {
+    background-color: var(--pl-dark-2);
+    color: var(--pl-light-1);
+    text-align: center;
+}
+
+.status {
+    height: 1.5em;
+    width: 1.5em;
+}
+
+.modal {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    /* padding-top: 60px; */
+    margin-left: 20%;
+}
+
+/* ========== Table form ========== */
+.tb-form {
+    border-collapse: collapse;
+    width: 90%;
+    margin: 0 5%;
+    border: none;
+    justify-content: center;
+}
+
+.tb-form-data {
+    width: 15%;
+    height: 50px;
+    border: none;
+    text-align: left;
+}
+
+.tb-form-data:nth-child(even) {
+    width: 30%;
+}
+
+.tb-form-row:nth-child(even) {
+    background-color: transparent;
+}
+
+.tb-form-row:hover {
+    background-color: transparent;
+}
+
+/* Center the image and position the close button */
+.container {
+    /* padding: 1.5em; */
+}
+
+.btn-col {
+    display: flex;
+    padding: 2em 5%;
+    justify-content: space-between;
+}
+
+.cancelbtn:hover {
+    color: var(--pl-light-1);
+    background-color: var(--pl-dark-2);
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border-radius: 0.5rem;
+    width: 92%; /* Could be more or less, depending on screen size */
+}
+
+/* Add Zoom Animation */
+.animate > h3 {
+    background-color: var(--pl-dark-3);
+    color: var(--pl-light-1);
+    padding: 10px;
+    text-align: center;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s;
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0);
+    }
+    to {
+        -webkit-transform: scale(1);
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+        display: block;
+        float: none;
+    }
+    .cancelbtn {
+        width: 100%;
+    }
+}

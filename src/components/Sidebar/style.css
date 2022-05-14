@@ -1,0 +1,66 @@
+.remote-control #logo {
+    color: var(--pl-dark-2);
+    align-items: center;
+    text-align: center;
+    margin-bottom: 30%;
+    padding-top: 7vh;
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.func-ctrl > ul {
+    align-items: center;
+    margin: 5em 0;
+}
+
+.fa-solid.fa-caret-down {
+    transform: rotateX(180deg);
+}
+
+.func-ctrl_items {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 480;
+    color: var(--pl-light-2);
+    padding: 15px 0;
+    margin: 30px 30px;
+}
+
+.func-ctrl_items.active {
+    background-color: var(--pl-dark-2);
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    transition: 0.5;
+}
+
+.func-ctrl_items:not(.active):hover::after {
+    width: 100%;
+}
+
+.func-ctrl_items:hover {
+    background-color: var(--pl-dark-2);
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.func-ctrl_acc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4% 12%;
+    color: var(--pl-dark-3);
+    vertical-align: bottom;
+    background-color: var(--pl-light-1);
+    font-size: 18px;
+    position: absolute;
+    bottom: 0;
+}
+
+.func-ctrl_acc > img {
+    max-width: 15%;
+    max-height: 15%;
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+}

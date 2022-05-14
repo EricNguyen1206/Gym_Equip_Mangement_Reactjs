@@ -1,0 +1,41 @@
+.employee {
+    font-size: 1.2rem;
+}
+.employee__title,
+.employee__control,
+.employee__table {
+    margin: 4vh 4vw;
+}
+
+.employee__control {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ws-path {
+    font-size: 2em;
+    font-weight: 600;
+    color: var(--pl-dark-3);
+}
+
+.btn-add {
+    display: flex;
+    align-items: center;
+    background-color: var(--pl-light-2);
+    padding: 0.3em 1.3em;
+    border-radius: 8px;
+    margin-left: 1rem;
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.employee__control--icon {
+    display: inline;
+    margin: 0 5px;
+    transform: translateY(10%);
+}
+
+.btn-add:hover {
+    background-color: var(--pl-dark-2);
+    color: var(--pl-light-1);
+}
