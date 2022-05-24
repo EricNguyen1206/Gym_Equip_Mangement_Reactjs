@@ -73,6 +73,15 @@
     text-align: center;
 }
 
+input[type="number"] {
+    width: 50%;
+    padding: 0.5em 0.7em;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+}
+
 .status {
     height: 1.5em;
     width: 1.5em;
@@ -187,3 +196,19 @@
         width: 100%;
     }
 }
+
+.purchase__subtable--readyList {
+    margin-bottom: 1rem;
+}
+
+/* .purchase__subtable--readyList table tbody {
+    width: 100%;
+    display: block;
+    margin-bottom: 1rem;
+} */
+
+/* .purchase__subtable--typeList table tbody,
+.purchase__subtable--readyList table tbody {
+    max-height: 360px;
+    overflow: scroll;
+} */

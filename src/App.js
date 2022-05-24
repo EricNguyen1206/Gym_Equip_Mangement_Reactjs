@@ -13,7 +13,7 @@ import {
     StaffTemplate,
 } from "./components";
 
-import { PageNotFound } from "./pages";
+import { PageNotFound, NoPermission } from "./pages";
 import { useAuth } from "./contexts";
 
 function App() {
@@ -82,13 +82,19 @@ function App() {
         }
     };
 
-    const switchRenderLayout = (idrole) => {
+    const switchRenderLayout = (idrole, makv) => {
         switch (idrole) {
-            case 1:
-                return renderLayoutStorekeeper(StoreKeeperRoutes);
-            case 2:
+            case "QLY":
                 return renderLayoutManager(ManagerRoutes);
-            case 3:
+            case "TKH":
+                if (!makv) {
+                    return <Route path="/" element={<NoPermission />} />;
+                }
+                return renderLayoutStorekeeper(StoreKeeperRoutes);
+            case "NVI":
+                if (!makv) {
+                    return <Route path="/" element={<NoPermission />} />;
+                }
                 return renderLayoutStaff(StaffRoutes);
             default:
                 return renderLayoutPublic(PublicRoutes);
@@ -99,7 +105,7 @@ function App() {
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
                     {user
-                        ? switchRenderLayout(user.idrole)
+                        ? switchRenderLayout(user.idrole, user.makv)
                         : renderLayoutPublic(PublicRoutes)}
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>

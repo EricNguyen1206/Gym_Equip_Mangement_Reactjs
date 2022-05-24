@@ -1,73 +1,101 @@
 import "./style.css";
 import { ArrowForwardIosRounded, AddRounded } from "@mui/icons-material";
-import {
-    EquipmentTypes,
-    Equipments,
-    EquipStatus,
-    User,
-    Areas,
-} from "../../../DummiesData";
+import { EquipmentTypes, Equipments } from "../../../DummiesData";
 import { useEffect, useState } from "react";
 import {
-    useAuth,
     useEquipments,
     useEquipTypes,
     useConditions,
-    useAreas,
+    useAuth,
+    useExtractions,
 } from "../../../contexts";
-import { getAreas } from "../../../contexts/areas/action";
 import { getEquipments } from "../../../contexts/equipments/action";
 import { getEquipTypes } from "../../../contexts/equipTypes/action";
 import { getConditions } from "../../../contexts/conditions/action";
+import { postExtraction } from "../../../contexts/extractions/action";
 
 function Liquidation() {
     const [popUp, setPopUp] = useState(false);
-    const [liquidCode, setLiquidCode] = useState("");
-    const [listItems, setListItems] = useState([]);
-    const [{ areas }, dispatchAreas] = useAreas();
+    const [readyList, setReadyList] = useState(() => []);
+    const [liquidList, setLiquidList] = useState(() => []);
+    const [curType, setCurType] = useState(null);
+    const [typesMapping, setTypesMapping] = useState(null);
+    const [conditionMapping, setConditionMapping] = useState(null);
+    const [{ user }, dispatchUser] = useAuth();
     const [{ equipments }, dispatchEquipments] = useEquipments();
     const [{ equipTypes }, dispatchEquipTypes] = useEquipTypes();
     const [{ conditions }, dispatchConditions] = useConditions();
+    const [{ extractions }, dispatchExtractions] = useExtractions();
+
     useEffect(() => {
-        getAreas(dispatchAreas);
         getEquipments(dispatchEquipments);
         getEquipTypes(dispatchEquipTypes);
         getConditions(dispatchConditions);
-    }, []);
-    const getEquipmentType = (code) => {
-        const res = (equipTypes || EquipmentTypes).find(
-            (type) => (type.matb = code)
-        );
-        return res?.tentb;
-    };
-    const getArea = (code) => {
-        const res = (areas || Areas).find((area) => (area.makv = code));
-        return res?.tenkv;
-    };
-    const getStatus = (code) => {
-        const res = (conditions || EquipStatus).find(
-            (status) => (status.id = code)
-        );
-        return res?.tinhtrang;
+    }, [dispatchEquipments, dispatchEquipTypes, dispatchConditions]);
+
+    useEffect(() => {
+        const newObj = {};
+        if (equipTypes) {
+            for (let i = 0; i < equipTypes.length; i++) {
+                newObj[equipTypes[i].matb] = equipTypes[i].tentb;
+            }
+        }
+        setTypesMapping(newObj);
+    }, [equipTypes]);
+    useEffect(() => {
+        const newArr = [];
+        if (conditions) {
+            for (let i = 0; i < conditions.length; i++) {
+                newArr[conditions[i].id] = conditions[i].tinhtrang;
+            }
+        }
+        setConditionMapping(newArr);
+    }, [conditions]);
+    const equipmentsPreprocessor = function (equips) {
+        return equips.map((equip) => ({
+            ...equip,
+            ltb: typesMapping[equip.maltb],
+            tinhtrang: conditionMapping[equip.tinhtrangTb],
+        }));
     };
     const handleBorrowEquip = (code) => {
-        console.log(code);
-        console.log(
-            (equipments || Equipments).filter(
-                (equip) => equip.maltb === liquidCode
-            )
-        );
-
-        setLiquidCode(code);
+        setCurType(code);
         setPopUp(true);
     };
-    const getEquipLeftInStore = (code) => {
-        return (equipments || Equipments).filter(
+    const getInventory = (code) => {
+        return [...(equipments || Equipments)].filter(
             (element) =>
                 element.maltb === code &&
                 element.makv === "KHO1" &&
-                (element.tinhtrangTb === 3 || element.tinhtrangTb === 4)
-        ).length;
+                (element.tinhtrangTb === "CSD" || element.tinhtrangTb === "WSD")
+        );
+    };
+    const handleCheck = (id) => {
+        const index = readyList.indexOf(id);
+        if (index === -1) {
+            setReadyList([...readyList, id]);
+        } else {
+            const newList = [...readyList];
+            newList.splice(index, 1);
+            setReadyList(newList);
+        }
+    };
+    const hanldeExtract = () => {
+        setLiquidList(
+            readyList.map((item) => equipments.find((e) => e.id === item))
+        );
+        setPopUp(false);
+    };
+    const handleSubmit = () => {
+        const newExtraction = {};
+        newExtraction.matknv = user.username;
+        newExtraction.matktk = null;
+        newExtraction.chitietPSD = liquidList.map((item) => ({
+            matb: item.id,
+            ngaylay: "2022-05-21",
+            ngaytra: null,
+        }));
+        postExtraction(dispatchExtractions, newExtraction);
     };
     return (
         <div className="liquidation">
@@ -78,33 +106,33 @@ function Liquidation() {
                 </p>
             </h1>
             <div className="liquidation__control">
-                <button className="btn-add" onClick={() => setPopUp(true)}>
+                <button className="btn-add" onClick={() => handleSubmit()}>
                     <p className="liquidation__control--icon">
                         <AddRounded />
                     </p>
-                    Yêu cầu thiết bị
+                    Tạo phiếu mượn
                 </button>
             </div>
-            {listItems ? (
+            {liquidList.length ? (
                 <div className="liquidation__table">
                     <table className="table">
                         <thead>
                             <tr>
                                 <th>Mã thiết bị</th>
                                 <th>Loại thiết bị</th>
-                                <th>Khu vực</th>
                                 <th>Tình trạng</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {listItems.map((equip, index) => (
-                                <tr key={index}>
-                                    <td>{equip.id}</td>
-                                    <td>{getEquipmentType(equip.maltb)}</td>
-                                    <td>{getArea(equip.makv)}</td>
-                                    <td>{getStatus(equip.tinhtrangTb)}</td>
-                                </tr>
-                            ))}
+                            {equipmentsPreprocessor(liquidList).map(
+                                (equip, index) => (
+                                    <tr key={index}>
+                                        <td>{equip.id}</td>
+                                        <td>{equip.ltb}</td>
+                                        <td>{equip.tinhtrang}</td>
+                                    </tr>
+                                )
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -128,12 +156,13 @@ function Liquidation() {
                                 <td>{item.tentb}</td>
                                 <td>{item.chitiet}</td>
                                 <td>
-                                    {getEquipLeftInStore(item.matb) > 0 ? (
+                                    {getInventory(item.matb).length > 0 ? (
                                         <button
                                             className="btn"
-                                            onClick={() =>
-                                                handleBorrowEquip(item.matb)
-                                            }
+                                            onClick={handleBorrowEquip.bind(
+                                                this,
+                                                item.matb
+                                            )}
                                         >
                                             Thêm vào phiếu
                                         </button>
@@ -166,51 +195,50 @@ function Liquidation() {
                                     <tr>
                                         <th>Mã thiết bị</th>
                                         <th>Loại thiết bị</th>
-                                        <th>Khu vực</th>
                                         <th>Tình trạng</th>
                                         <th>Yêu cầu</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {(equipments || Equipments)
-                                        .filter(
-                                            (equip) =>
-                                                equip.maltb === liquidCode
-                                        )
-                                        .map((equip, index) => (
-                                            <tr key={index}>
-                                                <td>{equip.id}</td>
-                                                <td>
-                                                    {getEquipmentType(
-                                                        equip.maltb
+                                    {equipmentsPreprocessor(
+                                        getInventory(curType)
+                                    ).map((equip, index) => (
+                                        <tr key={index}>
+                                            <td>{equip.id}</td>
+                                            <td>{equip.ltb}</td>
+                                            <td>{equip.tinhtrang}</td>
+                                            <td>
+                                                <input
+                                                    value={equip.id}
+                                                    type="checkbox"
+                                                    name="status"
+                                                    className="status"
+                                                    onChange={handleCheck.bind(
+                                                        this,
+                                                        equip.id
                                                     )}
-                                                </td>
-                                                <td>{getArea(equip.makv)}</td>
-                                                <td>
-                                                    {getStatus(
-                                                        equip.tinhtrangTb
-                                                    )}
-                                                </td>
-                                                <td>
-                                                    <input
-                                                        type="checkbox"
-                                                        name="status"
-                                                        className="status"
-                                                    />
-                                                </td>
-                                            </tr>
-                                        ))}
+                                                />
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                             <div className="btn-col">
                                 <button
                                     type="button"
-                                    onClick={() => setPopUp(false)}
+                                    onClick={() => {
+                                        setPopUp(false);
+                                        setReadyList([]);
+                                    }}
                                     className="cancelbtn btn"
                                 >
                                     Thoát
                                 </button>
-                                <button className="btn" type="submit">
+                                <button
+                                    className="btn"
+                                    type="button"
+                                    onClick={hanldeExtract}
+                                >
                                     Chọn
                                 </button>
                             </div>

@@ -1,5 +1,4 @@
 import React from "react";
-
 const Login = React.lazy(() => import("../pages/Login"));
 
 const ManagerArea = React.lazy(() => import("../pages/Manager/Area"));
@@ -23,6 +22,7 @@ const StorekeeperEquipment = React.lazy(() =>
 
 const StaffEquipment = React.lazy(() => import("../pages/Staff/Equipment"));
 const StaffLiquidation = React.lazy(() => import("../pages/Staff/Liquidation"));
+const StaffExtractList = React.lazy(() => import("../pages/Staff/ExtractList"));
 
 const ManagerRoutes = [
     {
@@ -85,6 +85,11 @@ const StaffRoutes = [
         exact: true,
         path: "/liquitation",
         element: <StaffLiquidation />,
+    },
+    {
+        exact: true,
+        path: "/extractlist",
+        element: <StaffExtractList />,
     },
 ];
 

@@ -20,3 +20,19 @@ export const getEquipments = async (dispatch) => {
         dispatch(getRejected());
     }
 };
+
+export const putConditionEquipments = async (dispatch, id) => {
+    const condition = {
+        tinhtrangTb: "BHU",
+    };
+    try {
+        const res = await api.put("thietbi/" + id, condition);
+        dispatch({
+            type: "EQUIPMENTS_PUTCONDITION_FULFILL",
+            payload: res.data,
+        });
+        console.log("ok");
+    } catch (err) {
+        console.log("err:", err);
+    }
+};

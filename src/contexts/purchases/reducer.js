@@ -24,6 +24,8 @@ const reducer = (state, action) => {
                 isFetching: false,
                 error: true,
             };
+        case "PURCHASES_CREATE_FULFILL":
+            return { ...state };
         default:
             return { ...state };
     }

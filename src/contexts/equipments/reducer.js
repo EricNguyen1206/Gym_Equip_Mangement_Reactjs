@@ -24,6 +24,8 @@ const reducer = (state, action) => {
                 isFetching: false,
                 error: true,
             };
+        case "EQUIPMENTS_PUTCONDITION_FULFILL":
+            return { ...state };
         default:
             return { ...state };
     }

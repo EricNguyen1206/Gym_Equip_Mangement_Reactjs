@@ -1,14 +1,20 @@
-import styles from "./style.css";
+import "./style.css";
 import { useState } from "react";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import man from "../../assets/images/man.jpg";
 import storer from "../../assets/images/storer.jpg";
 import staff from "../../assets/images/staff.jpg";
+import { useAuth } from "../../contexts";
+import { logout } from "../../contexts/auth/action";
 
-function Topbar({ user }) {
+function Topbar() {
+    const [{ user }, dispatch] = useAuth();
+    const handleLogout = () => {
+        logout(dispatch);
+    };
     return (
         <div className="topbar">
-            <div className="topbar__item">
+            <div className="topbar__item" onClick={() => handleLogout()}>
                 <span>Đăng xuất</span>
                 <span className="topbar__item--icon">
                     <LogoutOutlinedIcon />

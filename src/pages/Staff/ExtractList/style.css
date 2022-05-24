@@ -1,18 +1,18 @@
-.liquidate {
+.extractList {
     font-size: 1.2rem;
 }
-.liquidate__title,
-.liquidate__control,
-.liquidate__table {
+.extractList__title,
+.extractList__control,
+.extractList__table {
     margin: 4vh 4vw;
 }
 
-.liquidate__control {
+.extractList__control {
     display: flex;
     justify-content: flex-end;
 }
 
-.liquidate__control--icon {
+.extractList__control--icon {
     display: inline;
     margin: 0 5px;
     transform: translateY(10%);
@@ -20,12 +20,12 @@
 
 
 /* ========== Database ========== */
-.liquidate__table table {
+.extractList__table table {
     border-collapse: collapse;
     width: 100%;
 }
 
-.liquidate__table th {
+.extractList__table th {
     padding: 8px;
     border: 1px solid var(--pl-light-1);
     width: 50px;
@@ -34,7 +34,7 @@
     font-size: 1.2em;
 }
 
-.liquidate__table td {
+.extractList__table td {
     padding: 8px;
     border: 1px solid #f66b349b;
     width: 50px;
@@ -42,7 +42,7 @@
     text-align: center;
 }
 
-.liquidate__table td button {
+.extractList__table td button {
     margin: 0 .4rem;
     padding: .4rem 0.8rem;
     font-size: 1.2rem;
@@ -53,30 +53,26 @@
     cursor: pointer;
 }
 
-.liquidate__table td button:hover {
+.extractList__table td button:hover {
     border: .5px solid var(--pl-light-2);
     color: var(--pl-light-2);
     background-color: var(--pl-dark-3);
 }
 
-.liquidate__table tr:nth-child(even) {
+.extractList__table tr:nth-child(even) {
     background-color: #f66b3433;
 }
 
-.liquidate__table tr:hover {
+.extractList__table tr:hover {
     background-color: var(--pl-light-2);
 }
 
-.liquidate__table th {
+.extractList__table th {
     background-color: var(--pl-dark-2);
     color: var(--pl-light-1);
     text-align: center;
 }
-.content {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-}
+
 .status {
     height: 1.5em;
     width: 1.5em;

@@ -20,3 +20,56 @@ export const getExtractions = async (dispatch) => {
         dispatch(getRejected());
     }
 };
+
+export const postExtraction = async (dispatch, psd) => {
+    dispatch({
+        type: "EXTRACTION_POST_PENDING",
+    });
+    try {
+        const res = await api.post("phieusudung", psd);
+        console.log("ok");
+        dispatch({
+            type: "EXTRACTION_POST_FULFILL",
+            payload: res,
+        });
+    } catch (err) {
+        console.log("err");
+        dispatch({
+            type: "EXTRACTION_POST_REJECTED",
+        });
+    }
+};
+
+export const censorExtraction = async (dispatch, mapsd) => {
+    dispatch({
+        type: "EXTRACTION_CENSOR_PENDING",
+    });
+    try {
+        const res = await api.post("phieusudung/" + mapsd);
+        console.log("phieusudung/" + mapsd);
+        console.log("ok");
+        dispatch({
+            type: "EXTRACTION_CENSOR_FULFILL",
+            payload: res,
+        });
+    } catch (err) {
+        console.log("err");
+        dispatch({
+            type: "EXTRACTION_CENSOR_REJECTED",
+        });
+    }
+};
+
+export const rollbackEquipment = async (dispatch, mapsd, equipid) => {
+    try {
+        const res = await api.put("phieusudung/" + mapsd, { id: equipid });
+        console.log("phieusudung/" + mapsd);
+        console.log("ok");
+        dispatch({
+            type: "EXTRACTION_ROLLBACK_FULFILL",
+            payload: res.data,
+        });
+    } catch (err) {
+        console.log("err");
+    }
+};

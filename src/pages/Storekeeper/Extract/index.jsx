@@ -3,15 +3,21 @@ import "./style.css";
 import { ExtractOrders } from "../../../DummiesData";
 import { useEffect, useState } from "react";
 import { useExtractions } from "../../../contexts";
-import { getExtractions } from "../../../contexts/extractions/action";
-
+import {
+    getExtractions,
+    censorExtraction,
+} from "../../../contexts/extractions/action";
 function Extract() {
     const [popUp, setPopUp] = useState(false);
     const [currentExtraction, setCurrentExtraction] = useState(0);
     const [{ extractions }, dispatch] = useExtractions();
     useEffect(() => {
         getExtractions(dispatch);
-    }, []);
+    }, [dispatch]);
+    const handleCensor = (extractId) => {
+        censorExtraction(dispatch, extractId);
+        getExtractions(dispatch);
+    };
     return (
         <div className="extract">
             <h1 className="extract__title ws-path">
@@ -37,13 +43,23 @@ function Extract() {
                                     <span>{item.mapsd}</span>
                                 </td>
                                 <td>
-                                    <span>{item.mapsd}</span>
+                                    <span>{item.matknv}</span>
                                 </td>
                                 <td>
                                     <span>{item.chitietPSD[0].ngaylay}</span>
                                 </td>
                                 <td>
-                                    <button>Duyệt</button>
+                                    {item.matktk ? (
+                                        <></>
+                                    ) : (
+                                        <button
+                                            onClick={() =>
+                                                handleCensor(item.mapsd)
+                                            }
+                                        >
+                                            Duyệt
+                                        </button>
+                                    )}
                                     <button
                                         onClick={() => {
                                             setCurrentExtraction(index);

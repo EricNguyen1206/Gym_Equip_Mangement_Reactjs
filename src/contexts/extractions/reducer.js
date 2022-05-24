@@ -24,6 +24,36 @@ const reducer = (state, action) => {
                 isFetching: false,
                 error: true,
             };
+        case "EXTRACTION_POST_PENDING":
+            return {
+                extractions: null,
+                isFetching: true,
+                error: false,
+            };
+        case "EXTRACTION_POST_FULFILL":
+            return { ...state };
+        case "EXTRACTION_POST_REJECTED":
+            return {
+                extractions: null,
+                isFetching: false,
+                error: true,
+            };
+        case "EXTRACTION_CENSOR_PENDING":
+            return {
+                extractions: null,
+                isFetching: true,
+                error: false,
+            };
+        case "EXTRACTION_CENSOR_FULFILL":
+            return { ...state };
+        case "EXTRACTION_CENSOR_REJECTED":
+            return {
+                extractions: null,
+                isFetching: false,
+                error: true,
+            };
+        case "EXTRACTION_ROLLBACK_FULFILL":
+            return { ...state };
         default:
             return { ...state };
     }

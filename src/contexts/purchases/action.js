@@ -20,3 +20,15 @@ export const getPurchases = async (dispatch) => {
         dispatch(getRejected());
     }
 };
+
+export const createPurchase = async (dispatch, data) => {
+    console.log(data);
+    try {
+        const res = await api.post("phieunhap", data);
+        dispatch({
+            type: "PURCHASES_CREATE_FULFILL",
+        });
+    } catch (e) {
+        console.log(e);
+    }
+};

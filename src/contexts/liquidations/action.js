@@ -20,3 +20,15 @@ export const getLiquidations = async (dispatch) => {
         dispatch(getRejected());
     }
 };
+
+export const createLiquidation = async (dispatch, data) => {
+    try {
+        const res = await api.post("phieuthanhly", data);
+        dispatch({
+            type: "LIQUIDATION_CREATE_FULFILL",
+        });
+        console.log(res);
+    } catch (err) {
+        console.log(err);
+    }
+};

@@ -14,6 +14,23 @@
   font-weight: 700;
 }
 
+.btn-primary {
+  margin: 0 .4rem;
+  padding: .4rem 0.8rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  border: .5px solid var(--pl-dark-3);
+  border-radius: 8px;
+  background-color: var(--pl-light-1);
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  border: .5px solid var(--pl-light-2);
+  color: var(--pl-light-2);
+  background-color: var(--pl-dark-3);
+}
+
 .btn > a {
   background-color: var(--pl-light-2);
   color: var(--pl-dark-3);

@@ -10,7 +10,6 @@ function Login() {
     const [state, dispatch] = useAuth();
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log({ username, password });
         login({ username, password }, dispatch);
     };
     return (
@@ -33,25 +32,6 @@ function Login() {
                         <h3>Master Fitness</h3>
                     </div>
                     <form className={styles.loginFields}>
-                        {/* <div className={styles.formGroup}>
-                            <label className={styles.labelForm} htmlFor="pos">
-                                Chức vụ
-                            </label>
-                            <br />
-                            <select
-                                className={[
-                                    styles.pos,
-                                    styles.select,
-                                    styles.loginInput,
-                                ].join(" ")}
-                                id="pos"
-                                name="pos"
-                            >
-                                <option value="manager">Quản lý</option>
-                                <option value="employee">Nhân viên</option>
-                                <option value="storekeeper">Thủ kho</option>
-                            </select>
-                        </div> */}
                         <div className={styles.formGroup}>
                             <label className={styles.labelForm} htmlFor="name">
                                 Tài khoản

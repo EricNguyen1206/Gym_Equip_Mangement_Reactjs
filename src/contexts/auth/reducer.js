@@ -1,12 +1,5 @@
 const initState = {
-    user: {
-        username: "TK08",
-        matkhau: "123",
-        trangthai: true,
-        manv: "NV07",
-        makv: null,
-        idrole: 2,
-    },
+    user: null,
     isFetching: false,
     error: false,
 };

@@ -34,7 +34,7 @@ const LayoutStorekeeper = (props) => {
             {/* ========================= Main ==================== */}
 
             <div className={`main ${toggleNav ? "active" : ""}`}>
-                <Topbar user={User} />
+                <Topbar />
                 {props?.children}
             </div>
         </div>

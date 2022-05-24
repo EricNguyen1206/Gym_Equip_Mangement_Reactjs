@@ -2,8 +2,6 @@ import "./style.css";
 import { useState } from "react";
 import Topbar from "../../Topbar";
 import Sidebar from "../../Sidebar";
-import { User } from "../../../DummiesData";
-
 const LayoutStaff = (props) => {
     const [toggleNav, setToggleNav] = useState(false);
     const routes = [
@@ -12,8 +10,12 @@ const LayoutStaff = (props) => {
             path: "/",
         },
         {
-            title: "Mượn thiết bị",
+            title: "Yêu cầu thiết bị",
             path: "/liquitation",
+        },
+        {
+            title: "Phiếu sử dụng",
+            path: "/extractlist",
         },
     ];
     return (
@@ -25,7 +27,7 @@ const LayoutStaff = (props) => {
             />
             {/* ========================= Main ==================== */}
             <div className={`main ${toggleNav ? "active" : ""}`}>
-                <Topbar user={User} />
+                <Topbar />
                 {props?.children}
             </div>
         </div>

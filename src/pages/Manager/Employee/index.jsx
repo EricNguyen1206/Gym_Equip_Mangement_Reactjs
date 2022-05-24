@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { ArrowForwardIosRounded, AddRounded } from "@mui/icons-material";
 import "./style.css";
 import { Table } from "../../../components";
-import { Employees } from "../../../DummiesData";
 import { useEmployees } from "../../../contexts";
 import { getEmployees } from "../../../contexts/employees/action";
 const employeeTitle = [

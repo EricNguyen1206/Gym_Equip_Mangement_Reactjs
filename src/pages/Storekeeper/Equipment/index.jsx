@@ -1,29 +1,35 @@
 import { ArrowForwardIosRounded, AddRounded } from "@mui/icons-material";
 import "./style.css";
 import { Table } from "../../../components";
-import { EquipStatus, Equipments, EquipmentTypes } from "../../../DummiesData";
-import { useEffect } from "react";
-import { useEquipTypes, useEquipments, useConditions } from "../../../contexts";
+import { EquipStatus, EquipmentTypes } from "../../../DummiesData";
+import { useEffect, useState } from "react";
+import {
+    useEquipTypes,
+    useEquipments,
+    useConditions,
+    useLiquidations,
+} from "../../../contexts";
 import { getEquipments } from "../../../contexts/equipments/action";
 import { getEquipTypes } from "../../../contexts/equipTypes/action";
 import { getConditions } from "../../../contexts/conditions/action";
+import {
+    createLiquidation,
+    getLiquidations,
+} from "../../../contexts/liquidations/action";
 
-const equipmentTypesTitle = ["Tên thiết bị", "Chi tiết", "Mã thiết bị"];
-const equipmentsTitle = [
-    "Id",
-    "Mã phiếu nhập",
-    "Mã loại thiết bị",
-    "Mã khu vực",
-    "Tình trạng",
-];
 function Equipment() {
+    const [readyList, setReadyList] = useState([]);
+    const [priceList, setPriceList] = useState([]);
+    const [typeList, setTypeList] = useState([]);
     const [{ equipTypes }, dispatchEquipTypes] = useEquipTypes();
     const [{ equipments }, dispatchEquipment] = useEquipments();
     const [{ conditions }, dispatchConditions] = useConditions();
+    const [{ liquidations }, dispatchLiquidation] = useLiquidations();
     useEffect(() => {
         getConditions(dispatchConditions);
         getEquipTypes(dispatchEquipTypes);
         getEquipments(dispatchEquipment);
+        getLiquidations(dispatchLiquidation);
     }, []);
     const transEquipCondition = (condition) => {
         const res = (conditions || EquipStatus).find(
@@ -31,39 +37,168 @@ function Equipment() {
         );
         return res?.tinhtrang;
     };
-    const pretreatment = (data) => {
+    const transEquipType = (type) => {
+        const res = (equipTypes || EquipmentTypes).find(
+            (element) => element.matb === type
+        );
+        return res ? res.tentb : null;
+    };
+    const preprocessor = (data) => {
         const res = data.map((item) => ({
             ...item,
+            tentb: transEquipType(item.maltb),
             tinhtrangTb: transEquipCondition(item.tinhtrangTb),
         }));
         return res;
     };
+    const addItem = (item) => {
+        const index = readyList.findIndex((x) => x === item.id);
+        console.log(index);
+        if (index === -1) {
+            setReadyList([...readyList, item.id]);
+            setPriceList([...priceList, 0]);
+            setTypeList([...typeList, item.tentb]);
+        }
+    };
+    const handleChangePrice = (e, index) => {
+        let newPriceList = [...priceList];
+        newPriceList[index] = e.target.value;
+        setPriceList(newPriceList);
+    };
+    const deleteItem = (index) => {
+        const newreadyList = [...readyList];
+        const newPriceList = [...priceList];
+        const newTypeList = [...typeList];
+        newreadyList.splice(index, 1);
+        newPriceList.splice(index, 1);
+        newTypeList.splice(index, 1);
+        setReadyList(newreadyList);
+        setPriceList(newPriceList);
+        setTypeList(newTypeList);
+    };
+    const handleSubmit = () => {
+        const data = {
+            chitietPTL: readyList.map((item, index) => ({
+                gia: parseFloat(priceList[index]),
+                matb: parseInt(item),
+            })),
+        };
+        console.log(data);
+        createLiquidation(dispatchLiquidation, data);
+    };
     return (
         <div className="equipment">
             <h1 className="equipment__title ws-path">
-                Quản lý kho thiết bị
+                Danh sách thiết bị trong kho
                 <p className="equipment__control--icon">
                     <ArrowForwardIosRounded />
                 </p>
             </h1>
-            <div className="equipment__table">
-                <Table
-                    columns={equipmentTypesTitle}
-                    rows={equipTypes ? equipTypes : EquipmentTypes}
-                />
+            <div className="equipment__control">
+                <button
+                    type="button"
+                    className="btn-add"
+                    onClick={() => handleSubmit()}
+                >
+                    <p className="equipment__control--icon">
+                        <AddRounded />
+                    </p>
+                    Tạo phiếu thanh lý
+                </button>
             </div>
-            <h2 className="equipment__title ws-path">
-                Danh sách thiết bị trong kho
-            </h2>
             <div className="equipment__table">
-                <Table
-                    columns={equipmentsTitle}
-                    rows={pretreatment(
-                        (equipments ? equipments : Equipments).filter(
-                            (item) => (item.makv = "KHO1")
-                        )
-                    )}
-                />
+                {readyList.length > 0 ? (
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Loại thiết bị</th>
+                                <th>Giá</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {readyList.map((item, index) => (
+                                <tr key={index}>
+                                    <td>
+                                        <span>{item}</span>
+                                    </td>
+                                    <td>
+                                        <span>{typeList[index]}</span>
+                                    </td>
+                                    <td>
+                                        VND
+                                        <input
+                                            type="number"
+                                            required
+                                            min="0"
+                                            step="1000"
+                                            value={priceList[index]}
+                                            onChange={(e) =>
+                                                handleChangePrice(e, index)
+                                            }
+                                        />
+                                    </td>
+                                    <td>
+                                        <button
+                                            type="button"
+                                            className="btn-primary"
+                                            onClick={() => deleteItem(index)}
+                                        >
+                                            Bỏ
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <></>
+                )}
+            </div>
+            <div className="equipment__table">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Loại thiết bị</th>
+                            <th>Tình trạng</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {equipments ? (
+                            preprocessor(equipments).map((item, index) => (
+                                <tr key={index}>
+                                    <td>
+                                        <span>{item.id}</span>
+                                    </td>
+                                    <td>
+                                        <span>{item.tentb}</span>
+                                    </td>
+                                    <td>
+                                        <span>{item.tinhtrangTb}</span>
+                                    </td>
+                                    <td>
+                                        {item.tinhtrangTb === "Đã thanh lý" ? (
+                                            "Đã thanh lý"
+                                        ) : (
+                                            <button
+                                                type="button"
+                                                className="btn-primary"
+                                                onClick={() => addItem(item)}
+                                            >
+                                                Thêm vào phiếu
+                                            </button>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <></>
+                        )}
+                    </tbody>
+                </table>
             </div>
         </div>
     );

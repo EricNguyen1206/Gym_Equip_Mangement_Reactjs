@@ -13,10 +13,10 @@ const loginRejected = () => ({
 
 //logout
 
-export const logout = () => {
-    return {
+export const logout = (dispatch) => {
+    dispatch({
         type: "LOGOUT",
-    };
+    });
 };
 
 export const login = async (account, dispatch) => {

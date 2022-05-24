@@ -23,9 +23,9 @@ function Account() {
             trangthai: item.trangthai ? "Hoạt động" : "Khóa",
             makv: item.makv ? item.makv : "Null",
             idrole:
-                item.idrole === 1
+                item.idrole === "TKH"
                     ? "Thủ kho"
-                    : item.idrole === 2
+                    : item.idrole === "QLY"
                     ? "Quản lý"
                     : "Nhân viên",
         }));
