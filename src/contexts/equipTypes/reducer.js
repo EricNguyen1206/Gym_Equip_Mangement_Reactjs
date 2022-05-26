@@ -24,6 +24,12 @@ const reducer = (state, action) => {
                 isFetching: false,
                 error: true,
             };
+        case "EQUIPTYPES_CREATE_FULFILL":
+            return {
+                equipTypes: [...state.equipTypes, action.payload],
+                isFetching: false,
+                error: true,
+            };
         default:
             return { ...state };
     }

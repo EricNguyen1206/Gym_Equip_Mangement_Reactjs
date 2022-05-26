@@ -24,6 +24,14 @@ const reducer = (state, action) => {
                 isFetching: false,
                 error: true,
             };
+        case "ACCOUNTS_CREATE_FULFILL":
+            return {
+                accounts: [...state.accounts, action.payload],
+                isFetching: false,
+                error: true,
+            };
+        case "ACCOUNTS_UPDATE_FULFILL":
+            return { ...state };
         default:
             return { ...state };
     }

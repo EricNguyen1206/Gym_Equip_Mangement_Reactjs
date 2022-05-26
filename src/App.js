@@ -104,7 +104,7 @@ function App() {
         <Router>
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
-                    {user
+                    {user && user.trangthai
                         ? switchRenderLayout(user.idrole, user.makv)
                         : renderLayoutPublic(PublicRoutes)}
                     <Route path="*" element={<PageNotFound />} />

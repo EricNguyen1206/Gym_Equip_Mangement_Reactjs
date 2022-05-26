@@ -20,3 +20,15 @@ export const getEquipTypes = async (dispatch) => {
         dispatch(getRejected());
     }
 };
+
+export const createEquipTypes = async (dispatch, data) => {
+    try {
+        const res = await api.post("loaithietbi", data);
+        dispatch({
+            type: "EQUIPTYPES_CREATE_FULFILL",
+            payload: res.data,
+        });
+    } catch (err) {
+        alert("Lỗi:", err);
+    }
+};

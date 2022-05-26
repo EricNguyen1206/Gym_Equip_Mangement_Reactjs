@@ -24,6 +24,12 @@ const reducer = (state, action) => {
                 isFetching: false,
                 error: true,
             };
+        case "EMPLOYEES_POST_FULFILL":
+            return {
+                employees: [...state.employees, action.payload],
+                isFetching: false,
+                error: false,
+            };
         default:
             return { ...state };
     }

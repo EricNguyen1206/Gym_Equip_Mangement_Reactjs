@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./style.module.css";
 import logo from "../../assets/images/Logo.png";
 import avatar from "../../assets/images/Img_account.jpg";
@@ -7,11 +7,18 @@ import { login } from "../../contexts/auth/action";
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [state, dispatch] = useAuth();
+    const [{ user }, dispatch] = useAuth();
     const handleSubmit = (e) => {
         e.preventDefault();
         login({ username, password }, dispatch);
     };
+    useEffect(() => {
+        if (user) {
+            if (!user.trangthai) {
+                alert("Tài khoản này đã bị khóa!");
+            }
+        }
+    }, [user]);
     return (
         <div className={styles.loginContainer}>
             <div className={styles.login}>

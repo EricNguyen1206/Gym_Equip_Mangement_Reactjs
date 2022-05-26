@@ -24,6 +24,14 @@ const reducer = (state, action) => {
                 isFetching: false,
                 error: true,
             };
+        case "AREAS_CREATE_FULFILL":
+            return {
+                areas: [...state.areas, action.payload],
+                isFetching: false,
+                error: true,
+            };
+        case "AREAS_UPDATE_FULFILL":
+            return { ...state };
         default:
             return { ...state };
     }

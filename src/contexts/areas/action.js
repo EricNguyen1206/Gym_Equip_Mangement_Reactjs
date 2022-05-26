@@ -20,3 +20,29 @@ export const getAreas = async (dispatch) => {
         dispatch(getRejected());
     }
 };
+
+export const createArea = async (dispatch, data) => {
+    try {
+        const res = await api.post("khuvuc", data);
+        dispatch({
+            type: "AREAS_CREATE_FULFILL",
+            payload: res.data,
+        });
+    } catch (err) {
+        alert("Lỗi:", err);
+    }
+};
+
+export const updateArea = async (dispatch, id, data) => {
+    try {
+        const res = await api.put("khuvuc/" + id, data);
+        dispatch({
+            type: "AREAS_UPDATE_FULFILL",
+            payload: res.data,
+        });
+        alert("Chỉnh sửa khu vực thành công");
+    } catch (err) {
+        alert("Lỗi:", err.message);
+        console.log(err);
+    }
+};

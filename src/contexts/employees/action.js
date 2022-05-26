@@ -20,3 +20,16 @@ export const getEmployees = async (dispatch) => {
         dispatch(getRejected());
     }
 };
+
+export const postEmployee = async (dispatch, data) => {
+    try {
+        const res = await api.post("nhanvien", data);
+        dispatch({
+            type: "EMPLOYEES_POST_FULFILL",
+            payload: res.data,
+        });
+    } catch (err) {
+        console.log(err);
+        alert("Lỗi:", err);
+    }
+};

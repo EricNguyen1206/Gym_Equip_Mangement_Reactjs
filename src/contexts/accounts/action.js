@@ -20,3 +20,30 @@ export const getAccounts = async (dispatch) => {
         dispatch(getRejected());
     }
 };
+
+export const createAccount = async (dispatch, data) => {
+    try {
+        const res = await api.post("taikhoan", data);
+        dispatch({
+            type: "ACCOUNTS_CREATE_FULFILL",
+            payload: res.data,
+        });
+    } catch (err) {
+        alert("Lỗi:", err.message);
+        console.log(err);
+    }
+};
+
+export const updateAccount = async (dispatch, id, data) => {
+    try {
+        const res = await api.put("taikhoan/" + id, data);
+        dispatch({
+            type: "ACCOUNTS_UPDATE_FULFILL",
+            payload: res.data,
+        });
+        alert("Chỉnh sửa tài khoản thành công");
+    } catch (err) {
+        alert("Lỗi:", err.message);
+        console.log(err);
+    }
+};

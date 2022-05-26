@@ -1,5 +1,4 @@
 import "./style.css";
-import { useState } from "react";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import man from "../../assets/images/man.jpg";
 import storer from "../../assets/images/storer.jpg";
@@ -25,9 +24,9 @@ function Topbar() {
                 <img
                     className="topbar__item--avatar"
                     src={
-                        user.idrole === 1
+                        user.idrole === "TKH"
                             ? storer
-                            : user.idrole === 2
+                            : user.idrole === "QLY"
                             ? man
                             : staff
                     }

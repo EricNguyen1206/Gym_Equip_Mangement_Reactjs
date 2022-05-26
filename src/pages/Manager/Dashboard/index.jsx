@@ -94,7 +94,7 @@ function Dashboard() {
         return res;
     };
     return (
-        <>
+        <div className="dashboard">
             <h1 className="dashboard__title">
                 Thống kê hoạt động tháng {month + 1}
             </h1>
@@ -116,7 +116,7 @@ function Dashboard() {
                     rows={pretreatment(accounts || Accounts)}
                 />
             </div>
-        </>
+        </div>
     );
 }
 
