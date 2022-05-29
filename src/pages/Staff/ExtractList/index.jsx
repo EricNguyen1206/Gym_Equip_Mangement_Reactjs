@@ -45,7 +45,10 @@ function ExtractList() {
                                             </td>
                                             <td>
                                                 <span>
-                                                    {item.chitietPSD[0].ngaylay}
+                                                    {item.chitietPSD[0]
+                                                        ? item.chitietPSD[0]
+                                                              .ngaylay
+                                                        : "Null"}
                                                 </span>
                                             </td>
                                             <td>
@@ -108,6 +111,7 @@ function ExtractList() {
                                                 <td>{item.mapsd} </td>
                                                 <td>{item.matb} </td>
                                                 <td>{item.ngaylay} </td>
+                                                {/* <td>abc </td> */}
                                                 <td>
                                                     {item.ngaytra
                                                         ? item.ngaytra

@@ -20,6 +20,9 @@ function Area() {
     useEffect(() => {
         getAreas(dispatchAreas);
     }, []);
+
+    console.log("account:", accounts);
+
     const preprocessor = (data) => {
         const res = data.map((item) => ({
             ...item,
@@ -46,6 +49,8 @@ function Area() {
         } else {
             createArea(dispatchAreas, data);
             setPopUp(false);
+            setAreaId("");
+            setAreaName("");
         }
     };
     const handlePermit = (username) => {

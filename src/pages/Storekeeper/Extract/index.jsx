@@ -17,6 +17,7 @@ function Extract() {
     const handleCensor = (extractId) => {
         censorExtraction(dispatch, extractId);
         getExtractions(dispatch);
+        setPopUp(false);
     };
     return (
         <div className="extract">
@@ -120,7 +121,15 @@ function Extract() {
                                 >
                                     Hủy
                                 </button>
-                                <button className="btn" type="submit">
+                                <button
+                                    className="btn"
+                                    type="button"
+                                    onClick={() =>
+                                        handleCensor(
+                                            extractions[currentExtraction].mapsd
+                                        )
+                                    }
+                                >
                                     Duyệt
                                 </button>
                             </div>

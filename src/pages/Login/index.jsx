@@ -4,14 +4,11 @@ import logo from "../../assets/images/Logo.png";
 import avatar from "../../assets/images/Img_account.jpg";
 import { useAuth } from "../../contexts";
 import { login } from "../../contexts/auth/action";
+import encrypt from "../../utils/encript";
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [{ user }, dispatch] = useAuth();
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        login({ username, password }, dispatch);
-    };
     useEffect(() => {
         if (user) {
             if (!user.trangthai) {
@@ -19,6 +16,10 @@ function Login() {
             }
         }
     }, [user]);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        login({ username, matkhau: encrypt(password) }, dispatch);
+    };
     return (
         <div className={styles.loginContainer}>
             <div className={styles.login}>
@@ -75,20 +76,6 @@ function Login() {
                                 }}
                             />
                         </div>
-                        {/* <div className={styles.login_subform}>
-                            <div className={styles.subForm}>
-                                <input
-                                    type="checkbox"
-                                    defaultChecked="checked"
-                                    name="check"
-                                    defaultValue="remember"
-                                />
-                                <label htmlFor="check">Lưu tài khoản</label>
-                            </div>
-                            <a href="#" className={styles.forget}>
-                                Quên mật khẩu?
-                            </a>
-                        </div> */}
                         <button
                             className={[styles.btn, styles.btnDark].join(" ")}
                             onClick={(e) => handleSubmit(e)}

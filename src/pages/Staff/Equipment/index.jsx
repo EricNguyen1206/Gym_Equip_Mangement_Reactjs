@@ -106,9 +106,9 @@ function Equipment() {
                         extracDetails.ngaytra === null
                 )
             );
-            console.log(extraction);
             if (extraction) {
                 rollbackEquipment(dispatch, extraction.mapsd, element);
+                alert("Trả thiết bị thành công!");
             }
         });
     };

@@ -28,8 +28,9 @@ export const postEmployee = async (dispatch, data) => {
             type: "EMPLOYEES_POST_FULFILL",
             payload: res.data,
         });
+        alert("Tạo nhân viên thành công!");
     } catch (err) {
         console.log(err);
-        alert("Lỗi:", err);
+        alert("Lỗi:", err.response.data.message);
     }
 };

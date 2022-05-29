@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-    ArrowForwardIosRounded,
-    AddRounded,
-    TenMpOutlined,
-} from "@mui/icons-material";
+import { ArrowForwardIosRounded, AddRounded } from "@mui/icons-material";
 import "./style.css";
 import { Table } from "../../../components";
 import { useEmployees } from "../../../contexts";
@@ -25,10 +21,11 @@ function Employee() {
     const [gioitinh, setGioitinh] = useState(false);
     const [phone, setPhone] = useState(null);
     const [email, setEmail] = useState(null);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         getEmployees(dispatchEmployees);
-    }, []);
+    }, [dispatchEmployees]);
     const preprocessor = (data) => {
         const res = data.map((item) => ({
             ...item,
@@ -37,6 +34,7 @@ function Employee() {
         return res;
     };
     const handleSubmit = () => {
+        const regex = /^(0?)[0-9]{9}$/;
         const data = {
             manv,
             ho,
@@ -53,15 +51,17 @@ function Employee() {
             email === ""
         ) {
             alert("Thông tin nhân viên không được phép null");
+        } else if (!regex.test(phone)) {
+            alert("Số điện thoại không hợp lệ");
+        } else {
+            postEmployee(dispatchEmployees, data);
+            setPopUp(false);
+            setHo("");
+            setTen("");
+            setManv("");
+            setPhone("");
+            setEmail("");
         }
-        console.log(data);
-        postEmployee(dispatchEmployees, data);
-        setPopUp(false);
-        setHo("");
-        setTen("");
-        setManv("");
-        setPhone("");
-        setEmail("");
     };
 
     return (
@@ -85,6 +85,7 @@ function Employee() {
                     <Table
                         columns={employeeTitle}
                         rows={preprocessor(employees)}
+                        limit={20}
                     />
                 ) : (
                     <></>

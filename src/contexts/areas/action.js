@@ -28,8 +28,9 @@ export const createArea = async (dispatch, data) => {
             type: "AREAS_CREATE_FULFILL",
             payload: res.data,
         });
+        alert("Tạo khu vực thành công!");
     } catch (err) {
-        alert("Lỗi:", err);
+        alert("Lỗi:", err.response.data.message);
     }
 };
 

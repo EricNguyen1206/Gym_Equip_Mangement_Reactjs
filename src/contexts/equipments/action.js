@@ -31,8 +31,8 @@ export const putConditionEquipments = async (dispatch, id) => {
             type: "EQUIPMENTS_PUTCONDITION_FULFILL",
             payload: res.data,
         });
-        console.log("ok");
+        alert("Cập nhật thành công!");
     } catch (err) {
-        console.log("err:", err);
+        console.log("err:", err.response.data.message);
     }
 };

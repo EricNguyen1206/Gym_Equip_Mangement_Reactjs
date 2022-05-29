@@ -12,6 +12,7 @@ export { default as StorekeeperExtract } from "./Storekeeper/Extract";
 export { default as StorekeeperPurchase } from "./Storekeeper/Purchase";
 export { default as StorekeeperLiquidate } from "./Storekeeper/Liquidate";
 export { default as StorekeeperEquipment } from "./Storekeeper/Equipment";
+export { default as StorekeeperDashboard } from "./Storekeeper/Dashboard";
 
 export { default as StaffEquipment } from "./Staff/Equipment";
 export { default as StaffExtractList } from "./Staff/ExtractList";

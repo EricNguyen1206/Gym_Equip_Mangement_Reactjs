@@ -13,18 +13,21 @@ const reducer = (state, action) => {
                 error: false,
             };
         case "LOGIN_FULFILL":
+            sessionStorage.setItem("user", JSON.stringify(action.payload));
             return {
                 user: action.payload,
                 isFetching: false,
                 error: false,
             };
         case "LOGIN_REJECTED":
+            alert(action.payload.response.data.message);
             return {
                 user: null,
                 isFetching: false,
                 error: true,
             };
         case "LOGOUT":
+            sessionStorage.removeItem("user");
             return {
                 user: null,
                 isFetching: false,

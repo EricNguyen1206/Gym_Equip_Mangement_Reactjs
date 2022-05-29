@@ -19,6 +19,9 @@ const StorekeeperLiquidate = React.lazy(() =>
 const StorekeeperEquipment = React.lazy(() =>
     import("../pages/Storekeeper/Equipment")
 );
+const StorekeeperDashboard = React.lazy(() =>
+    import("../pages/Storekeeper/Dashboard")
+);
 
 const StaffEquipment = React.lazy(() => import("../pages/Staff/Equipment"));
 const StaffLiquidation = React.lazy(() => import("../pages/Staff/Liquidation"));
@@ -65,8 +68,8 @@ const StoreKeeperRoutes = [
     },
     {
         exact: true,
-        path: "/liquidate",
-        element: <StorekeeperLiquidate />,
+        path: "/dashboard",
+        element: <StorekeeperDashboard />,
     },
     {
         exact: true,

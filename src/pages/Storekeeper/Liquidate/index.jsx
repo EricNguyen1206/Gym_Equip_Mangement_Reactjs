@@ -28,7 +28,7 @@ function Liquidate() {
     const [{ liquidations }, dispatch] = useLiquidations();
     useEffect(() => {
         getLiquidations(dispatch);
-    }, []);
+    }, [dispatch]);
     console.log("check", liquidations);
     const handleCheck = (id) => {
         const index = readyList.indexOf(id);
@@ -108,21 +108,6 @@ function Liquidate() {
                         ))}
                     </tbody>
                 </table>
-            </div>
-
-            <div className="liquidate__table">
-                {/* <Table
-                    columns={equipmentsTitle}
-                    rows={
-                        equipments
-                            ? preprocessor(
-                                  equipments.filter(
-                                      (item) => (item.makv = "KHO1")
-                                  )
-                              )
-                            : ""
-                    }
-                /> */}
             </div>
 
             <div className="liquidate__subtable popUp">

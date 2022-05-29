@@ -1,6 +1,7 @@
 .topbar {
     width: 100%;
     height: 5rem;
+    position: relative;
     background-color: var(--pl-dark-2);
     display: flex;
     justify-content: flex-end;

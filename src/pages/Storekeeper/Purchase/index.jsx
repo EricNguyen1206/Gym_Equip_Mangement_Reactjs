@@ -46,12 +46,6 @@ function Purchase() {
             newAmountList.splice(index, 1);
             newPriceList.splice(index, 1);
             newPurchageDetails.splice(index, 1);
-            console.log(
-                e.target.value,
-                newPurchageDetails,
-                newAmountList,
-                newPriceList
-            );
             setAmountList(newAmountList);
             setPurchaseDetails(newPurchageDetails);
             setPriceList(newPriceList);
@@ -69,6 +63,9 @@ function Purchase() {
                 maltb: item,
             })),
         };
+        setPurchaseDetails([]);
+        setPriceList([]);
+        setPriceList([]);
         createPurchase(dispatch, data);
     };
     return (
@@ -154,7 +151,7 @@ function Purchase() {
                                           ].chitietPN.map((item, i) => (
                                               <tr key={i}>
                                                   <td>{item.mapn} </td>
-                                                  <td>{item.matb} </td>
+                                                  <td>{item.maltb} </td>
                                                   <td>{item.soluong} </td>
                                                   <td>{item.gia} </td>
                                               </tr>

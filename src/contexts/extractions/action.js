@@ -27,11 +27,11 @@ export const postExtraction = async (dispatch, psd) => {
     });
     try {
         const res = await api.post("phieusudung", psd);
-        console.log("ok");
         dispatch({
             type: "EXTRACTION_POST_FULFILL",
             payload: res,
         });
+        alert("Tạo phiếu thành công!");
     } catch (err) {
         console.log("err");
         dispatch({
@@ -46,8 +46,6 @@ export const censorExtraction = async (dispatch, mapsd) => {
     });
     try {
         const res = await api.post("phieusudung/" + mapsd);
-        console.log("phieusudung/" + mapsd);
-        console.log("ok");
         dispatch({
             type: "EXTRACTION_CENSOR_FULFILL",
             payload: res,
@@ -63,13 +61,11 @@ export const censorExtraction = async (dispatch, mapsd) => {
 export const rollbackEquipment = async (dispatch, mapsd, equipid) => {
     try {
         const res = await api.put("phieusudung/" + mapsd, { id: equipid });
-        console.log("phieusudung/" + mapsd);
-        console.log("ok");
         dispatch({
             type: "EXTRACTION_ROLLBACK_FULFILL",
             payload: res.data,
         });
     } catch (err) {
-        console.log("err");
+        console.log("Ok");
     }
 };

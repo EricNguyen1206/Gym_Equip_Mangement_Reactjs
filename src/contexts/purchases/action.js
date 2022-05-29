@@ -28,6 +28,7 @@ export const createPurchase = async (dispatch, data) => {
         dispatch({
             type: "PURCHASES_CREATE_FULFILL",
         });
+        alert("Nhập hàng thành công!");
     } catch (e) {
         console.log(e);
     }

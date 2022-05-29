@@ -53,7 +53,6 @@ function Equipment() {
     };
     const addItem = (item) => {
         const index = readyList.findIndex((x) => x === item.id);
-        console.log(index);
         if (index === -1) {
             setReadyList([...readyList, item.id]);
             setPriceList([...priceList, 0]);
@@ -83,8 +82,12 @@ function Equipment() {
                 matb: parseInt(item),
             })),
         };
-        console.log(data);
-        createLiquidation(dispatchLiquidation, data);
+        if (data.chitietPTL.length === 0) {
+            alert("Vui lòng chọn thiết bị cần thanh lý!");
+        } else {
+            createLiquidation(dispatchLiquidation, data);
+            setReadyList([]);
+        }
     };
     return (
         <div className="equipment">
@@ -99,11 +102,14 @@ function Equipment() {
                     type="button"
                     className="btn-add"
                     onClick={() => handleSubmit()}
+                    style={{
+                        display: `${readyList.length > 0 ? "block" : "none"}`,
+                    }}
                 >
                     <p className="equipment__control--icon">
                         <AddRounded />
                     </p>
-                    Tạo phiếu thanh lý
+                    Thanh lý
                 </button>
             </div>
             <div className="equipment__table">
@@ -168,7 +174,11 @@ function Equipment() {
                     </thead>
                     <tbody>
                         {equipments ? (
-                            preprocessor(equipments).map((item, index) => (
+                            preprocessor(
+                                equipments.filter(
+                                    (element) => element.makv === "KHO1"
+                                )
+                            ).map((item, index) => (
                                 <tr key={index}>
                                     <td>
                                         <span>{item.id}</span>
@@ -188,7 +198,7 @@ function Equipment() {
                                                 className="btn-primary"
                                                 onClick={() => addItem(item)}
                                             >
-                                                Thêm vào phiếu
+                                                Thanh lý
                                             </button>
                                         )}
                                     </td>

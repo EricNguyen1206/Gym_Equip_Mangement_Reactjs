@@ -2,7 +2,6 @@ import "./style.css";
 import { useState } from "react";
 import Topbar from "../../Topbar";
 import Sidebar from "../../Sidebar";
-import { User } from "../../../DummiesData";
 
 const LayoutStorekeeper = (props) => {
     const [toggleNav, setToggleNav] = useState(false);
@@ -20,8 +19,8 @@ const LayoutStorekeeper = (props) => {
             path: "/equipment",
         },
         {
-            title: "Thanh lý",
-            path: "/liquidate",
+            title: "Thống kê",
+            path: "/dashboard",
         },
     ];
     return (

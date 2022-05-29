@@ -27,7 +27,7 @@ export const createLiquidation = async (dispatch, data) => {
         dispatch({
             type: "LIQUIDATION_CREATE_FULFILL",
         });
-        console.log(res);
+        alert("Đã thanh lý!");
     } catch (err) {
         console.log(err);
     }

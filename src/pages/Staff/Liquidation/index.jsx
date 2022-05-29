@@ -87,15 +87,20 @@ function Liquidation() {
         setPopUp(false);
     };
     const handleSubmit = () => {
+        const d = new Date();
         const newExtraction = {};
         newExtraction.matknv = user.username;
         newExtraction.matktk = null;
         newExtraction.chitietPSD = liquidList.map((item) => ({
             matb: item.id,
-            ngaylay: "2022-05-21",
+            ngaylay: `${d.getFullYear()}-${
+                d.getMonth() >= 9 ? d.getMonth() + 1 : "0" + (d.getMonth() + 1)
+            }-${d.getDate() >= 9 ? d.getDate() : "0" + d.getDate()}`,
             ngaytra: null,
         }));
         postExtraction(dispatchExtractions, newExtraction);
+        setReadyList([]);
+        setLiquidList([]);
     };
     return (
         <div className="liquidation">
@@ -106,11 +111,17 @@ function Liquidation() {
                 </p>
             </h1>
             <div className="liquidation__control">
-                <button className="btn-add" onClick={() => handleSubmit()}>
+                <button
+                    className="btn-add"
+                    onClick={() => handleSubmit()}
+                    style={{
+                        display: `${liquidList.length > 0 ? "block" : "none"}`,
+                    }}
+                >
                     <p className="liquidation__control--icon">
                         <AddRounded />
                     </p>
-                    Tạo phiếu mượn
+                    Tạo phiếu sử dụng
                 </button>
             </div>
             {liquidList.length ? (
@@ -209,10 +220,11 @@ function Liquidation() {
                                             <td>{equip.tinhtrang}</td>
                                             <td>
                                                 <input
-                                                    value={equip.id}
                                                     type="checkbox"
-                                                    name="status"
                                                     className="status"
+                                                    checked={readyList.includes(
+                                                        equip.id
+                                                    )}
                                                     onChange={handleCheck.bind(
                                                         this,
                                                         equip.id
