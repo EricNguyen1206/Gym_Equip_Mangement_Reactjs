@@ -21,8 +21,6 @@ function Account() {
     const [{ employees }, dispatchEmployees] = useEmployees();
     const [{ user }, dispatchUser] = useAuth();
     const [popUp, setPopUp] = useState(false);
-    const [popUpDetail, setPopUpDetail] = useState(false);
-    const [curAccount, setCurAccount] = useState(null);
     const [username, setUsername] = useState("");
     const [manv, setManv] = useState("");
     useEffect(() => {
@@ -69,25 +67,12 @@ function Account() {
             createAccount(dispatchAccounts, data);
         }
     };
-    const handleResetMatkhau = () => {
-        const newAcc = Object.assign({}, curAccount);
-        newAcc.matkhau = "123456";
-        setCurAccount(newAcc);
-    };
-    const handleChangeTrangthai = () => {
-        const newAcc = Object.assign({}, curAccount);
-        newAcc.trangthai = newAcc.trangthai === "Khóa" ? "Hoạt động" : "Khóa";
-        setCurAccount(newAcc);
-    };
-    const handleUpdateAccount = () => {
-        console.log("check acc:", curAccount);
+    const handleChangeTrangthai = (username, status) => {
         const data = {
-            matkhau: curAccount.matkhau,
-            trangthai: curAccount.trangthai !== "Khóa",
+            trangthai: status === "Khóa",
         };
-        updateAccount(dispatchAccounts, curAccount.username, data);
+        updateAccount(dispatchAccounts, username, data);
         setTimeout(getAccounts(dispatchAccounts), 500);
-        setPopUpDetail(false);
     };
     return (
         <div className="account">
@@ -145,13 +130,18 @@ function Account() {
                                             <></>
                                         ) : (
                                             <button
+                                                type="button"
                                                 className="btn-primary"
                                                 onClick={() => {
-                                                    setCurAccount(item);
-                                                    setPopUpDetail(true);
+                                                    handleChangeTrangthai(
+                                                        item.username,
+                                                        item.trangthai
+                                                    );
                                                 }}
                                             >
-                                                Chỉnh sửa
+                                                {item.trangthai === "Khóa"
+                                                    ? "Bật"
+                                                    : "Khóa"}
                                             </button>
                                         )}
                                     </td>
@@ -225,89 +215,6 @@ function Account() {
                                     className="btn"
                                     type="button"
                                     onClick={() => handleSubmit()}
-                                >
-                                    Lưu
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div className="account__subtable popUp">
-                <div
-                    className="modal"
-                    style={{ display: `${popUpDetail ? "block" : "none"}` }}
-                >
-                    <form className="modal-content animate">
-                        <h3>CHỈNH SỬA TÀI KHOẢN</h3>
-                        <div className="container">
-                            <table className="tb-form">
-                                <tbody>
-                                    <tr className="tb-form-row">
-                                        <td className="tb-form-data">
-                                            <label>
-                                                <b>Mật khẩu</b>
-                                            </label>
-                                        </td>
-                                        <td className="tb-form-data">
-                                            <span>
-                                                {curAccount
-                                                    ? curAccount.matkhau
-                                                    : "null"}
-                                            </span>
-                                            <button
-                                                type="button"
-                                                className="btn-primary"
-                                                onClick={() =>
-                                                    handleResetMatkhau()
-                                                }
-                                            >
-                                                Đặt lại
-                                            </button>
-                                        </td>
-                                        <td className="tb-form-data">
-                                            <label>
-                                                <b>Trạng thái</b>
-                                            </label>
-                                        </td>
-                                        <td className="tb-form-data">
-                                            <span>
-                                                {curAccount
-                                                    ? curAccount.trangthai
-                                                    : "null"}
-                                            </span>
-                                            <button
-                                                type="button"
-                                                className="btn-primary"
-                                                onClick={() =>
-                                                    handleChangeTrangthai()
-                                                }
-                                            >
-                                                {curAccount
-                                                    ? curAccount.trangthai ===
-                                                      "Khóa"
-                                                        ? "Bật"
-                                                        : "Khóa"
-                                                    : "null"}
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div className="btn-col">
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setPopUpDetail(false);
-                                    }}
-                                    className="cancelbtn btn"
-                                >
-                                    Hủy
-                                </button>
-                                <button
-                                    className="btn"
-                                    type="button"
-                                    onClick={() => handleUpdateAccount()}
                                 >
                                     Lưu
                                 </button>

@@ -26,6 +26,13 @@ const reducer = (state, action) => {
                 isFetching: false,
                 error: true,
             };
+        case "ACCOUNTS_RESETPASSWORD_FULFILL":
+            localStorage.setItem("forgetPassword", true);
+            return {
+                user: null,
+                isFetching: false,
+                error: false,
+            };
         case "LOGOUT":
             sessionStorage.removeItem("user");
             return {

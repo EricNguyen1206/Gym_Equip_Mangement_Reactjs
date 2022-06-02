@@ -48,3 +48,19 @@ export const updatePassword = async (username, user, dispatch) => {
         alert("Lỗi:", err);
     }
 };
+
+export const forgetPassword = async (dispatch, username) => {
+    try {
+        const res = await api.post("reset-password/" + username);
+        dispatch({
+            type: "ACCOUNTS_RESETPASSWORD_FULFILL",
+        });
+        console.log("check:", res);
+        alert(
+            "Mật khẩu tài khoản này đã được đặt lại\nVui lòng kiểm tra email!"
+        );
+    } catch (err) {
+        alert("Lỗi:", err.message);
+        console.log(err);
+    }
+};

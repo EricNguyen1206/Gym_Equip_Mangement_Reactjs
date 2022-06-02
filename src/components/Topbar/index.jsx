@@ -1,5 +1,5 @@
 import "./style.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import man from "../../assets/images/man.jpg";
 import storer from "../../assets/images/storer.jpg";
@@ -11,8 +11,17 @@ import encrypt from "../../utils/encript";
 function Topbar() {
     const [{ user }, dispatch] = useAuth();
     const [popUpDetail, setPopUpDetail] = useState(false);
+    const [isForget, setIsForget] = useState(false);
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
+    useEffect(() => {
+        const forget = localStorage.getItem("forgetPassword");
+        console.log("forget password", forget);
+        if (forget) {
+            setIsForget(true);
+            setPopUpDetail(true);
+        }
+    }, []);
     const handleLogout = () => {
         logout(dispatch);
     };
@@ -27,8 +36,10 @@ function Topbar() {
             };
             updatePassword(user.username, data, dispatch);
             setPopUpDetail(false);
+            setIsForget(false);
             setOldPassword("");
             setNewPassword("");
+            localStorage.removeItem("forgetPassword");
         }
     };
     return (
@@ -116,6 +127,11 @@ function Topbar() {
                             <div className="btn-col">
                                 <button
                                     type="button"
+                                    style={{
+                                        display: `${
+                                            isForget ? "none" : "block"
+                                        }`,
+                                    }}
                                     onClick={() => {
                                         setPopUpDetail(false);
                                     }}

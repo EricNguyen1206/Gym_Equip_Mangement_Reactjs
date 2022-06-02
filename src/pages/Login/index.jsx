@@ -3,7 +3,7 @@ import styles from "./style.module.css";
 import logo from "../../assets/images/Logo.png";
 import avatar from "../../assets/images/Img_account.jpg";
 import { useAuth } from "../../contexts";
-import { login } from "../../contexts/auth/action";
+import { login, forgetPassword } from "../../contexts/auth/action";
 import encrypt from "../../utils/encript";
 function Login() {
     const [username, setUsername] = useState("");
@@ -19,6 +19,13 @@ function Login() {
     const handleSubmit = (e) => {
         e.preventDefault();
         login({ username, matkhau: encrypt(password) }, dispatch);
+    };
+    const handleForgetPass = () => {
+        if (username === "") {
+            alert("Vui lòng nhập Tên tài khoản!");
+        } else {
+            forgetPassword(dispatch, username);
+        }
     };
     return (
         <div className={styles.loginContainer}>
@@ -76,6 +83,19 @@ function Login() {
                                 }}
                             />
                         </div>
+                        <button
+                            type="button"
+                            style={{
+                                display: "block",
+                                backgroundColor: "transparent",
+                                color: "blue",
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                            }}
+                            onClick={() => handleForgetPass()}
+                        >
+                            Quên mật khẩu
+                        </button>
                         <button
                             className={[styles.btn, styles.btnDark].join(" ")}
                             onClick={(e) => handleSubmit(e)}
