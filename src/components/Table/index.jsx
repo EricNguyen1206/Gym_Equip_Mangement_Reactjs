@@ -3,11 +3,11 @@ import "./style.css";
 function Table({
     columns,
     rows,
+    page = 1,
     limit = 10,
     primary = "white",
     secondary = "white",
 }) {
-    const [page, setPage] = useState(1);
     const [pageItems, setPageItems] = useState([]);
     const [total, setTotal] = useState(1);
 
@@ -54,15 +54,17 @@ function Table({
                 </tr>
             </thead>
             <tbody>
-                {pageItems.map((item, index) => (
-                    <tr key={index}>
-                        {Object.keys(item).map((itm, idx) => (
-                            <td key={idx}>
-                                <span>{item[itm]}</span>
-                            </td>
-                        ))}
-                    </tr>
-                ))}
+                {rows
+                    .slice(page * limit - limit, page * limit)
+                    .map((item, index) => (
+                        <tr key={index}>
+                            {Object.keys(item).map((itm, idx) => (
+                                <td key={idx}>
+                                    <span>{item[itm]}</span>
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
             </tbody>
         </table>
     );

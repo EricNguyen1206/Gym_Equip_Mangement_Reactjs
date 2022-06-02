@@ -1,8 +1,8 @@
-import { ArrowForwardIosRounded, AddRounded } from "@mui/icons-material";
 import "./style.css";
-import { Table } from "../../../components";
-import { EquipStatus, EquipmentTypes } from "../../../DummiesData";
 import { useEffect, useState } from "react";
+import Pagination from "@mui/material/Pagination";
+import { ArrowForwardIosRounded, AddRounded } from "@mui/icons-material";
+import { EquipStatus, EquipmentTypes } from "../../../DummiesData";
 import {
     useEquipTypes,
     useEquipments,
@@ -21,6 +21,8 @@ function Equipment() {
     const [readyList, setReadyList] = useState([]);
     const [priceList, setPriceList] = useState([]);
     const [typeList, setTypeList] = useState([]);
+    const [count, setCount] = useState(1);
+    const [page, setPage] = useState(1);
     const [{ equipTypes }, dispatchEquipTypes] = useEquipTypes();
     const [{ equipments }, dispatchEquipment] = useEquipments();
     const [{ conditions }, dispatchConditions] = useConditions();
@@ -31,6 +33,15 @@ function Equipment() {
         getEquipments(dispatchEquipment);
         getLiquidations(dispatchLiquidation);
     }, []);
+    useEffect(() => {
+        equipments &&
+            setCount(
+                Math.ceil(
+                    equipments.filter((element) => element.makv === "KHO1")
+                        .length / 10
+                )
+            );
+    }, [equipments]);
     const transEquipCondition = (condition) => {
         const res = (conditions || EquipStatus).find(
             (element) => element.id === condition
@@ -88,6 +99,9 @@ function Equipment() {
             createLiquidation(dispatchLiquidation, data);
             setReadyList([]);
         }
+    };
+    const handlePageChange = (e, pg) => {
+        setPage(pg);
     };
     return (
         <div className="equipment">
@@ -175,9 +189,11 @@ function Equipment() {
                     <tbody>
                         {equipments ? (
                             preprocessor(
-                                equipments.filter(
-                                    (element) => element.makv === "KHO1"
-                                )
+                                equipments
+                                    .filter(
+                                        (element) => element.makv === "KHO1"
+                                    )
+                                    .slice(page * 10 - 10, page * 10)
                             ).map((item, index) => (
                                 <tr key={index}>
                                     <td>
@@ -210,6 +226,11 @@ function Equipment() {
                     </tbody>
                 </table>
             </div>
+            <Pagination
+                count={count}
+                color="primary"
+                onChange={(e, pg) => handlePageChange(e, pg)}
+            />
         </div>
     );
 }

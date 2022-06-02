@@ -1,6 +1,7 @@
-import { ArrowForwardIosRounded, AddRounded } from "@mui/icons-material";
 import "./style.css";
 import { useEffect, useState } from "react";
+import { ArrowForwardIosRounded, AddRounded } from "@mui/icons-material";
+import Pagination from "@mui/material/Pagination";
 import { Table } from "../../../components";
 import { EquipStatus } from "../../../DummiesData";
 import { useEquipments, useEquipTypes, useConditions } from "../../../contexts";
@@ -26,12 +27,16 @@ function Equipment() {
     const [equipId, setEquipId] = useState(null);
     const [equipType, setEquipType] = useState(null);
     const [equipDetails, setEquipDetails] = useState(null);
-
+    const [count, setCount] = useState(1);
+    const [page, setPage] = useState(1);
     useEffect(() => {
         getEquipments(dispatchEquipments);
         getEquipTypes(dispatchEquipTypes);
         getConditions(dispatchConditions);
     }, []);
+    useEffect(() => {
+        equipments && setCount(Math.ceil(equipments.length / 10));
+    }, [equipments]);
     const transEquipCondition = (condition) => {
         const res = (conditions || EquipStatus).find(
             (element) => element.id === condition
@@ -67,6 +72,9 @@ function Equipment() {
         }
         setPopUp(false);
     };
+    const handlePageChange = (e, pg) => {
+        setPage(pg);
+    };
     return (
         <div className="equipment">
             <h1 className="equipment__title ws-path">
@@ -95,12 +103,18 @@ function Equipment() {
                 {equipments ? (
                     <Table
                         columns={equipmentsTitle}
+                        page={page}
                         rows={pretreatment(equipments)}
                     />
                 ) : (
                     <></>
                 )}
             </div>
+            <Pagination
+                count={count}
+                color="primary"
+                onChange={(e, pg) => handlePageChange(e, pg)}
+            />
             <div className="liquidate__subtable popUp">
                 <div
                     className="modal"

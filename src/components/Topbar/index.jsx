@@ -7,6 +7,7 @@ import staff from "../../assets/images/staff.jpg";
 import { useAuth } from "../../contexts";
 import { logout, updatePassword } from "../../contexts/auth/action";
 import encrypt from "../../utils/encript";
+import { useNavigate } from "react-router-dom";
 
 function Topbar() {
     const [{ user }, dispatch] = useAuth();
@@ -14,9 +15,9 @@ function Topbar() {
     const [isForget, setIsForget] = useState(false);
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
+    const navigate = useNavigate();
     useEffect(() => {
         const forget = localStorage.getItem("forgetPassword");
-        console.log("forget password", forget);
         if (forget) {
             setIsForget(true);
             setPopUpDetail(true);
@@ -24,6 +25,7 @@ function Topbar() {
     }, []);
     const handleLogout = () => {
         logout(dispatch);
+        navigate("/");
     };
     const handleUpdateAccount = () => {
         if (oldPassword === "" || newPassword === "") {
