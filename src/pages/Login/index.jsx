@@ -8,6 +8,9 @@ import encrypt from "../../utils/encript";
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [manv, setManv] = useState("");
+    const [popUp, setPopUp] = useState(false);
     const [{ user }, dispatch] = useAuth();
     useEffect(() => {
         if (user) {
@@ -21,11 +24,19 @@ function Login() {
         login({ username, matkhau: encrypt(password) }, dispatch);
     };
     const handleForgetPass = () => {
-        if (username === "") {
-            alert("Vui lòng nhập Tên tài khoản!");
+        if (username === "" || manv === "" || email === "") {
+            alert("Vui lòng nhập đầy đủ thông tin!");
         } else {
-            forgetPassword(dispatch, username);
+            const data = {
+                manv,
+                email,
+            };
+            forgetPassword(dispatch, username, data);
         }
+        setPopUp(false);
+        setUsername("");
+        setManv("");
+        setEmail("");
     };
     return (
         <div className={styles.loginContainer}>
@@ -92,7 +103,7 @@ function Login() {
                                 textDecoration: "underline",
                                 cursor: "pointer",
                             }}
-                            onClick={() => handleForgetPass()}
+                            onClick={() => setPopUp(true)}
                         >
                             Quên mật khẩu
                         </button>
@@ -102,6 +113,90 @@ function Login() {
                         >
                             Đăng nhập
                         </button>
+                    </form>
+                </div>
+            </div>
+            <div className="account__subtable popUp">
+                <div
+                    className="modal"
+                    style={{ display: `${popUp ? "block" : "none"}` }}
+                >
+                    <form
+                        className="modal-content animate"
+                        style={{ width: "45%", fontSize: "1.4rem" }}
+                    >
+                        <h3>ĐẶT LẠI MẬT KHẨU</h3>
+                        <div className="container">
+                            <table className="tb-form">
+                                <tbody>
+                                    <tr className="tb-form-row">
+                                        <td className="tb-form-data">
+                                            <label htmlFor="time">
+                                                <b>Tên tài khoản</b>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                placeholder="Nhập tên tài khoản"
+                                                required
+                                                value={username}
+                                                onChange={(e) =>
+                                                    setUsername(e.target.value)
+                                                }
+                                            />
+                                        </td>
+                                        <td className="tb-form-data">
+                                            <label htmlFor="id">
+                                                <b>Email</b>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                placeholder="Nhập email"
+                                                required
+                                                value={email}
+                                                onChange={(e) =>
+                                                    setEmail(e.target.value)
+                                                }
+                                            />
+                                        </td>
+                                        <td className="tb-form-data">
+                                            <label htmlFor="id">
+                                                <b>Mã nhân viên</b>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                placeholder="Nhập ID nhân viên"
+                                                required
+                                                value={manv}
+                                                onChange={(e) =>
+                                                    setManv(e.target.value)
+                                                }
+                                            />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div className="btn-col">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setPopUp(false);
+                                        setUsername("");
+                                        setManv("");
+                                        setEmail("");
+                                    }}
+                                    className="cancelbtn btn"
+                                >
+                                    Thoát
+                                </button>
+                                <button
+                                    className="btn"
+                                    type="button"
+                                    onClick={() => handleForgetPass()}
+                                >
+                                    Xác nhận
+                                </button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

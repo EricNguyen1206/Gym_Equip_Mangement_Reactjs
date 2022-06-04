@@ -8,14 +8,6 @@ import {
     createAccount,
     updateAccount,
 } from "../../../contexts/accounts/action";
-const AccountsTitle = [
-    "Tên tài khoản",
-    "Mật khẩu",
-    "Trạng thái",
-    "Mã nhân viên",
-    "Mã khu vực",
-    "Quyền",
-];
 function Account() {
     const [{ accounts }, dispatchAccounts] = useAccounts();
     const [{ employees }, dispatchEmployees] = useEmployees();
@@ -96,7 +88,6 @@ function Account() {
                         <thead>
                             <tr>
                                 <th>Tên tài khoản</th>
-                                <th>Mật khẩu</th>
                                 <th>Trạng thái</th>
                                 <th>Mã nhân viên</th>
                                 <th>Mã khu vực</th>
@@ -109,9 +100,6 @@ function Account() {
                                 <tr key={index}>
                                     <td>
                                         <span>{item.username}</span>
-                                    </td>
-                                    <td>
-                                        <span>{item.matkhau}</span>
                                     </td>
                                     <td>
                                         <span>{item.trangthai}</span>

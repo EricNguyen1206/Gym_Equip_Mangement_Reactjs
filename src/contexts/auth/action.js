@@ -49,9 +49,9 @@ export const updatePassword = async (username, user, dispatch) => {
     }
 };
 
-export const forgetPassword = async (dispatch, username) => {
+export const forgetPassword = async (dispatch, username, data) => {
     try {
-        const res = await api.post("reset-password/" + username);
+        const res = await api.post("reset-password/" + username, data);
         dispatch({
             type: "ACCOUNTS_RESETPASSWORD_FULFILL",
         });
@@ -60,7 +60,8 @@ export const forgetPassword = async (dispatch, username) => {
             "Mật khẩu tài khoản này đã được đặt lại\nVui lòng kiểm tra email!"
         );
     } catch (err) {
-        alert("Lỗi:", err.message);
-        console.log(err);
+        const message = err.response.data.message;
+        alert("Lỗi:" + message);
+        console.log("Lỗi:", err.response.data.message);
     }
 };

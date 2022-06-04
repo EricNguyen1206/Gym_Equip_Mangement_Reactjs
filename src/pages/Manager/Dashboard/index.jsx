@@ -93,27 +93,54 @@ function Dashboard() {
             data: [1, 0, 0, 0, 0, 0],
             backgroundColor: "rgba(255, 205, 56, 0.5)",
         };
-        for (let i = 0; i < 6; i++) {
-            dataSet0.data[i] = countMonthlyPhieunhapCreated(purchases, i);
+        if (m < 6) {
+            for (let i = 0; i < 6; i++) {
+                dataSet0.data[i] = countMonthlyPhieunhapCreated(purchases, i);
+                dataSet1.data[i] = countMonthlyPhieuthanhlyCreated(
+                    liquidations,
+                    i
+                );
+                dataSet2.data[i] = countMonthlyPhieusudungCreated(
+                    extractions,
+                    i
+                );
+            }
+            setData({
+                labels: [
+                    "Tháng 1",
+                    "Tháng 2",
+                    "Tháng 3",
+                    "Tháng 4",
+                    "Tháng 5",
+                    "Tháng 6",
+                ],
+                datasets: [dataSet0, dataSet1, dataSet2],
+            });
+        } else {
+            for (let i = 6; i < 12; i++) {
+                dataSet0.data[i] = countMonthlyPhieunhapCreated(purchases, i);
+                dataSet1.data[i] = countMonthlyPhieuthanhlyCreated(
+                    liquidations,
+                    i
+                );
+                dataSet2.data[i] = countMonthlyPhieusudungCreated(
+                    extractions,
+                    i
+                );
+            }
+            setData({
+                labels: [
+                    "Tháng 7",
+                    "Tháng 8",
+                    "Tháng 9",
+                    "Tháng 10",
+                    "Tháng 11",
+                    "Tháng 12",
+                ],
+                datasets: [dataSet0, dataSet1, dataSet2],
+            });
         }
-        for (let i = 0; i < 6; i++) {
-            dataSet1.data[i] = countMonthlyPhieuthanhlyCreated(liquidations, i);
-        }
-        for (let i = 0; i < 6; i++) {
-            dataSet2.data[i] = countMonthlyPhieusudungCreated(extractions, i);
-        }
-        setData({
-            labels: [
-                "Tháng 1",
-                "Tháng 2",
-                "Tháng 3",
-                "Tháng 4",
-                "Tháng 5",
-                "Tháng 6",
-            ],
-            datasets: [dataSet0, dataSet1, dataSet2],
-        });
-    }, []);
+    }, [purchases, extractions, liquidations]);
     return (
         <div className="dashboard">
             <h1 className="dashboard__title">Thống kê hoạt động</h1>
